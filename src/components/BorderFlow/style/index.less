@@ -1,0 +1,28 @@
+@import "../../../styles/variables.less";
+
+/* ========================================
+   BorderBeam — SVG 边框流光
+   ======================================== */
+
+.cyberpunk-borderbeam {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  z-index: 0;
+
+  /* Default animation — per-instance override via inline style */
+  .bb-rect {
+    will-change: stroke-dashoffset;
+  }
+
+  &.bb-reverse .bb-rect {
+    animation-direction: reverse;
+  }
+
+  .bb-inner {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    overflow: hidden;
+  }
+}

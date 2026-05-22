@@ -1,0 +1,118 @@
+@import "@/styles/variables.less";
+@import "@/styles/mixins.less";
+
+.cyberpunk-code-block {
+  position: relative;
+  background: darken(@bg-primary, 2%);
+  border: @border-width solid @border-color;
+  border-radius: @border-radius-md;
+  overflow: hidden;
+  box-shadow: 0 0 8px rgba(0, 243, 255, 0.06);
+  font-family: @font-family-base;
+
+  .code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: @spacing-sm @spacing-md;
+    background: @bg-secondary;
+    border-bottom: 1px solid fade(@border-color, 25%);
+
+    .code-lang {
+      color: @primary-color;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-family: @font-family-heading;
+    }
+
+    .code-actions {
+      display: flex;
+      gap: @spacing-xs;
+    }
+
+    .code-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: @border-color;
+      box-shadow: 0 0 4px @border-color;
+
+      &:nth-child(1) { background: #ff0066; box-shadow: 0 0 4px #ff0066; }
+      &:nth-child(2) { background: @accent-color; box-shadow: 0 0 4px @accent-color; }
+      &:nth-child(3) { background: @primary-color; box-shadow: 0 0 4px @primary-color; }
+    }
+
+    .code-copy-btn {
+      background: transparent;
+      border: 1px solid fade(@border-color, 40%);
+      color: @text-tertiary;
+      padding: 2px @spacing-sm;
+      font-size: 11px;
+      cursor: pointer;
+      border-radius: @border-radius-sm;
+      letter-spacing: 1px;
+      transition: all @animation-duration-fast;
+      font-family: @font-family-base;
+
+      &:hover {
+        border-color: @primary-color;
+        color: @primary-color;
+      }
+    }
+  }
+
+  .code-content {
+    padding: @spacing-md @spacing-lg;
+    overflow-x: auto;
+    .cyberpunk-scrollbar();
+
+    pre {
+      margin: 0;
+      color: @text-primary;
+      font-size: 13px;
+      line-height: 1.8;
+      white-space: pre;
+      tab-size: 2;
+    }
+
+    code {
+      font-family: @font-family-base;
+    }
+  }
+
+  // 关键字高亮(简易主题)
+  .code-content {
+    .hl-keyword { color: @secondary-color; }
+    .hl-string { color: @accent-color; }
+    .hl-number { color: @primary-color-light; }
+    .hl-comment { color: @text-disabled; font-style: italic; }
+    .hl-function { color: @primary-color; }
+    .hl-type { color: lighten(@secondary-color, 10%); }
+    .hl-operator { color: @text-tertiary; }
+    .hl-property { color: lighten(@primary-color, 10%); }
+  }
+
+  // 行号
+  &.code-line-numbers .code-content pre {
+    counter-reset: line;
+
+    .code-line::before {
+      counter-increment: line;
+      content: counter(line);
+      display: inline-block;
+      width: 32px;
+      margin-right: @spacing-md;
+      text-align: right;
+      color: @text-disabled;
+      font-size: 11px;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+  }
+
+  &.code-glow {
+    border-color: @primary-color;
+    box-shadow: @shadow-sm;
+  }
+}

@@ -1,0 +1,65 @@
+@import "./variables.less";
+@import "./mixins.less";
+@import "./tokens.css";
+
+// 全局重置
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: @font-family-base;
+  background-color: @bg-primary;
+  color: @text-primary;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+// 动画类
+@keyframes cyberpunk-glow {
+  0%, 100% {
+    box-shadow: @shadow-sm;
+  }
+  50% {
+    box-shadow: @shadow-md;
+  }
+}
+
+@keyframes cyberpunk-scan {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes cyberpunk-flicker {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.cyberpunk-glow {
+  animation: cyberpunk-glow 2s ease-in-out infinite;
+}
+
+.cyberpunk-scan {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    fade(@primary-color, 20%),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: cyberpunk-scan 3s linear infinite;
+}
+
+.cyberpunk-flicker {
+  animation: cyberpunk-flicker 0.5s ease-in-out infinite;
+}

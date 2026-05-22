@@ -1,0 +1,143 @@
+@import "@/styles/variables.less";
+@import "@/styles/mixins.less";
+
+.cyberpunk-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  .cyberpunk-scrollbar();
+}
+
+.cyberpunk-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: @font-family-base;
+  font-size: 14px;
+  color: @text-secondary;
+
+  thead {
+    .table-header-row {
+      border-bottom: 2px solid @primary-color;
+      box-shadow: 0 2px 8px rgba(0, 243, 255, 0.08);
+    }
+
+    .table-header-cell {
+      padding: @spacing-md @spacing-lg;
+      text-align: left;
+      color: @primary-color;
+      font-family: @font-family-heading;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      background: @bg-secondary;
+      white-space: nowrap;
+
+      &.cell-sortable {
+        cursor: pointer;
+        -webkit-user-select: none;
+        user-select: none;
+
+        &:hover {
+          color: @primary-color-light;
+        }
+      }
+
+      .sort-icon {
+        margin-left: 4px;
+        color: @text-tertiary;
+
+        &.sort-active {
+          color: @primary-color;
+        }
+      }
+    }
+  }
+
+  tbody {
+    .table-row {
+      border-bottom: 1px solid fade(@border-color, 15%);
+      transition: background @animation-duration-fast;
+
+      &:hover {
+        background: fade(@primary-color, 4%);
+      }
+
+      &.row-clickable {
+        cursor: pointer;
+
+        &:hover {
+          background: fade(@primary-color, 8%);
+        }
+      }
+
+      &.row-selected {
+        background: fade(@primary-color, 12%);
+        border-left: 2px solid @primary-color;
+      }
+    }
+
+    .table-cell {
+      padding: @spacing-md @spacing-lg;
+      vertical-align: middle;
+
+      &.cell-ellipsis {
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    .table-empty {
+      .table-empty-cell {
+        padding: @spacing-xxl;
+        text-align: center;
+        color: @text-disabled;
+        font-size: 13px;
+        letter-spacing: 1px;
+      }
+    }
+  }
+
+  .table-loading-overlay {
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(10, 10, 15, 0.5);
+      pointer-events: none;
+    }
+  }
+
+  // 大小
+  &.table-sm {
+    font-size: 12px;
+
+    .table-header-cell, .table-cell {
+      padding: @spacing-sm @spacing-md;
+    }
+  }
+
+  // 边框
+  &.table-bordered {
+    border: @border-width solid @border-color;
+
+    .table-cell, .table-header-cell {
+      border: 1px solid fade(@border-color, 20%);
+    }
+  }
+
+  // 发光
+  &.table-glow {
+    border: @border-width solid @primary-color;
+    box-shadow: @shadow-sm;
+  }
+
+  // 斑马纹
+  &.table-striped tbody .table-row:nth-child(even) {
+    background: fade(@bg-tertiary, 30%);
+
+    &:hover { background: fade(@primary-color, 6%); }
+  }
+}

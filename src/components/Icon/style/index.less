@@ -1,0 +1,40 @@
+@import "@/styles/variables.less";
+
+.cyberpunk-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  color: inherit;
+  transition: all @animation-duration-fast;
+
+  svg {
+    fill: currentColor;
+  }
+
+  &.icon-spin {
+    animation: icon-spin 1s linear infinite;
+  }
+
+  &.icon-pulse {
+    animation: icon-pulse 1.5s ease-in-out infinite;
+  }
+
+  &.icon-glow {
+    filter: drop-shadow(0 0 4px currentColor);
+  }
+
+  &.icon-sm { font-size: 14px; }
+  &.icon-md { font-size: 20px; }
+  &.icon-lg { font-size: 28px; }
+  &.icon-xl { font-size: 40px; }
+}
+
+@keyframes icon-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes icon-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.1); }
+}

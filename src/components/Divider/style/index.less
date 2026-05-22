@@ -1,0 +1,106 @@
+@import "@/styles/variables.less";
+
+.cyberpunk-divider {
+  display: flex;
+  align-items: center;
+  margin: @spacing-md 0;
+  border: none;
+
+  &::before,
+  &::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, @border-color, transparent);
+  }
+
+  &.divider-horizontal {
+    width: 100%;
+  }
+
+  &.divider-vertical {
+    flex-direction: column;
+    height: 1em;
+    margin: 0 @spacing-sm;
+
+    &::before,
+    &::after {
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(180deg, transparent, @border-color, transparent);
+    }
+  }
+
+  .divider-text {
+    padding: 0 @spacing-md;
+    color: @text-tertiary;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    white-space: nowrap;
+  }
+
+  // 发光模式
+  &.divider-glow {
+    &::before,
+    &::after {
+      background: linear-gradient(90deg, transparent, @primary-color, transparent);
+      height: 2px;
+      box-shadow: @shadow-sm;
+    }
+  }
+
+  // 样式变体
+  &.divider-dashed {
+    &::before,
+    &::after {
+      height: 1px;
+      background: repeating-linear-gradient(90deg, @border-color 0, @border-color 4px, transparent 4px, transparent 8px);
+    }
+  }
+
+  &.divider-solid {
+    &::before,
+    &::after {
+      background: @border-color;
+    }
+  }
+
+  // 颜色变体
+  &.divider-secondary {
+    &::before,
+    &::after {
+      background: linear-gradient(90deg, transparent, @secondary-color, transparent);
+    }
+  }
+
+  &.divider-accent {
+    &::before,
+    &::after {
+      background: linear-gradient(90deg, transparent, @accent-color, transparent);
+    }
+  }
+
+  &.divider-left {
+    &::before {
+      flex: 0 0 24px;
+    }
+    &::after {
+      flex: 1;
+    }
+  }
+
+  &.divider-right {
+    &::before {
+      flex: 1;
+    }
+    &::after {
+      flex: 0 0 24px;
+    }
+  }
+}
+
+@keyframes divider-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}

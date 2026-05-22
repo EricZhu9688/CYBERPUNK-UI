@@ -1,0 +1,43 @@
+@import "@/styles/variables.less";
+
+.cyberpunk-typewriter {
+  display: inline;
+  font-family: @font-family-base;
+  color: @text-primary;
+
+  .typewriter-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background: @primary-color;
+    box-shadow: 0 0 4px @primary-color;
+    margin-left: 2px;
+    vertical-align: middle;
+    animation: cursor-blink 0.8s step-end infinite;
+  }
+
+  &.typewriter-sm { font-size: 13px; }
+  &.typewriter-md { font-size: 15px; }
+  &.typewriter-lg { font-size: 18px; }
+
+  &.typewriter-accent .typewriter-cursor {
+    background: @accent-color;
+    box-shadow: 0 0 4px @accent-color;
+  }
+
+  &.typewriter-secondary .typewriter-cursor {
+    background: @secondary-color;
+    box-shadow: 0 0 4px @secondary-color;
+  }
+}
+
+.cyberpunk-typewriter-wrapper {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}

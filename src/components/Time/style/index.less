@@ -1,0 +1,639 @@
+@import "../../../styles/variables.less";
+
+/* ========================================
+   Time — 赛博朋克HUD实时时钟
+   ======================================== */
+
+.cyberpunk-time {
+  display: inline-flex;
+  position: relative;
+  overflow: hidden;
+  border: @border-width solid @border-color;
+  background: linear-gradient(135deg, fade(@bg-primary, 95%), fade(@bg-secondary, 90%));
+  box-shadow: inset 0 0 30px rgba(0, 243, 255, 0.05);
+  font-family: @font-family-heading;
+  user-select: none;
+
+  /* scanline overlay base */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.03) 2px,
+      rgba(0, 0, 0, 0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .time-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .time-weekday {
+    font-size: 13px;
+    color: @text-tertiary;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border: 1px solid fade(@text-tertiary, 30%);
+    border-radius: @border-radius-sm;
+  }
+
+  .time-date {
+    font-size: 13px;
+    color: @text-secondary;
+    letter-spacing: 1px;
+  }
+
+  .time-clock {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .time-digits {
+    font-family: @font-family-heading;
+    font-weight: 700;
+    letter-spacing: 3px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .time-ampm {
+    font-size: 60%;
+    color: @text-tertiary;
+    letter-spacing: 1px;
+  }
+
+  /* ── Color variants ── */
+
+  &.time-primary {
+    border-color: @border-color;
+
+    .time-digits {
+      color: @primary-color;
+      text-shadow: 0 0 8px @primary-color, 0 0 20px fade(@primary-color, 50%), 0 0 40px fade(@primary-color, 30%);
+    }
+    .time-weekday { border-color: fade(@primary-color, 30%); color: fade(@primary-color, 70%); }
+    .time-date { color: fade(@primary-color, 60%); }
+  }
+
+  &.time-secondary {
+    border-color: @border-color-secondary;
+
+    .time-digits {
+      color: @secondary-color;
+      text-shadow: 0 0 8px @secondary-color, 0 0 20px fade(@secondary-color, 50%), 0 0 40px fade(@secondary-color, 30%);
+    }
+    .time-weekday { border-color: fade(@secondary-color, 30%); color: fade(@secondary-color, 70%); }
+    .time-date { color: fade(@secondary-color, 60%); }
+  }
+
+  &.time-accent {
+    border-color: @accent-color;
+
+    .time-digits {
+      color: @accent-color;
+      text-shadow: 0 0 8px @accent-color, 0 0 20px fade(@accent-color, 50%), 0 0 40px fade(@accent-color, 30%);
+    }
+    .time-weekday { border-color: fade(@accent-color, 30%); color: fade(@accent-color, 70%); }
+    .time-date { color: fade(@accent-color, 60%); }
+  }
+
+  /* ── Glow ── */
+
+  &.time-glow {
+    &.time-primary { box-shadow: @shadow-sm, inset 0 0 30px fade(@primary-color, 5%); }
+    &.time-secondary { box-shadow: 0 0 5px @secondary-color, inset 0 0 30px fade(@secondary-color, 5%); }
+    &.time-accent { box-shadow: 0 0 5px @accent-color, inset 0 0 30px fade(@accent-color, 5%); }
+  }
+
+  /* ── Scan effect ── */
+
+  &.time-scan {
+    .time-scanline {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: currentColor;
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 3;
+      animation: timeScan 3s linear infinite;
+    }
+  }
+
+  /* ── Sizes ── */
+
+  &.time-small {
+    .time-inner { padding: 6px 12px; gap: 8px; }
+    .time-weekday { font-size: 10px; padding: 1px 5px; letter-spacing: 1px; }
+    .time-date { font-size: 11px; }
+    .time-digits { font-size: 16px; letter-spacing: 2px; }
+  }
+
+  &.time-medium {
+    .time-inner { padding: 12px 20px; gap: 12px; }
+    .time-weekday { font-size: 13px; }
+    .time-date { font-size: 13px; }
+    .time-digits { font-size: 28px; }
+  }
+
+  &.time-large {
+    .time-inner { padding: 16px 28px; gap: 16px; }
+    .time-weekday { font-size: 15px; padding: 3px 10px; }
+    .time-date { font-size: 15px; }
+    .time-digits { font-size: 42px; letter-spacing: 4px; }
+  }
+
+  /* ── Format: compact (time only, centered) ── */
+
+  &.time-compact {
+    .time-inner { justify-content: center; gap: 4px; }
+  }
+
+  /* ── Format: date (no time) ── */
+
+  &.time-date {
+    .time-inner { gap: 8px; }
+  }
+}
+
+@keyframes timeScan {
+  0% { top: -2px; }
+  100% { top: 100%; }
+}
+
+/* ========================================
+   TimePicker — 时间选择器
+   ======================================== */
+
+.cyberpunk-timepicker {
+  display: inline-block;
+  position: relative;
+  font-family: @font-family-base;
+
+  .timepicker-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 12px;
+    background: @bg-secondary;
+    border: @border-width solid @border-color;
+    color: @text-primary;
+    cursor: pointer;
+    transition: border-color @animation-duration-fast, box-shadow @animation-duration-fast;
+    min-width: 140px;
+
+    &:hover {
+      border-color: @primary-color-light;
+    }
+  }
+
+  .timepicker-value {
+    font-family: @font-family-heading;
+    letter-spacing: 2px;
+    color: @primary-color;
+  }
+
+  .timepicker-placeholder {
+    color: @text-tertiary;
+    font-size: 13px;
+  }
+
+  .timepicker-icon {
+    color: @text-tertiary;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    font-size: 14px;
+  }
+
+  /* ── Color variants ── */
+
+  &.timepicker-secondary {
+    .timepicker-trigger { border-color: @border-color-secondary;
+      &:hover { border-color: @secondary-color-light; }
+    }
+    .timepicker-value { color: @secondary-color; }
+  }
+
+  &.timepicker-accent {
+    .timepicker-trigger { border-color: @accent-color;
+      &:hover { border-color: @accent-color-light; }
+    }
+    .timepicker-value { color: @accent-color; }
+  }
+
+  /* ── Glow ── */
+
+  &.timepicker-glow {
+    .timepicker-trigger { box-shadow: @shadow-sm; }
+    &.timepicker-secondary .timepicker-trigger { box-shadow: 0 0 5px @secondary-color; }
+    &.timepicker-accent .timepicker-trigger { box-shadow: 0 0 5px @accent-color; }
+  }
+
+  /* ── Sizes ── */
+
+  &.timepicker-small {
+    .timepicker-trigger { padding: 4px 8px; font-size: 12px; min-width: 110px; }
+    .timepicker-value { font-size: 13px; letter-spacing: 1px; }
+  }
+
+  &.timepicker-large {
+    .timepicker-trigger { padding: 12px 16px; font-size: 16px; min-width: 180px; }
+    .timepicker-value { font-size: 18px; }
+  }
+
+  /* ── Disabled ── */
+
+  &.timepicker-disabled {
+    .timepicker-trigger {
+      opacity: 0.5;
+      cursor: not-allowed;
+      &:hover { border-color: @border-color; }
+    }
+  }
+}
+
+/* Panel */
+
+.timepicker-panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: @z-index-dropdown;
+  background: @bg-secondary;
+  border: @border-width solid @border-color;
+  padding: 16px 20px;
+  min-width: 220px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 15px fade(@primary-color, 15%);
+
+  &.timepicker-panel-secondary {
+    border-color: @border-color-secondary;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 15px fade(@secondary-color, 15%);
+  }
+
+  &.timepicker-panel-accent {
+    border-color: @accent-color;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 15px fade(@accent-color, 15%);
+  }
+}
+
+.timepicker-columns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.timepicker-sep {
+  font-size: 24px;
+  font-weight: 700;
+  color: @primary-color;
+  text-shadow: 0 0 6px @primary-color;
+  padding-bottom: 18px;
+  font-family: @font-family-heading;
+}
+
+.timepicker-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.timepicker-arrow {
+  background: none;
+  border: none;
+  color: @text-tertiary;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  transition: color @animation-duration-fast;
+
+  &:hover { color: @primary-color; }
+  &:active { color: @primary-color-light; }
+}
+
+.timepicker-col-value {
+  width: 52px;
+  height: 44px;
+  text-align: center;
+  font-size: 28px;
+  font-family: @font-family-heading;
+  font-weight: 700;
+  color: @primary-color;
+  text-shadow: 0 0 8px @primary-color;
+  background: @bg-primary;
+  border: 1px solid fade(@primary-color, 30%);
+  border-radius: @border-radius-sm;
+  outline: none;
+
+  &:focus {
+    border-color: @primary-color;
+    box-shadow: 0 0 10px fade(@primary-color, 40%);
+  }
+}
+
+.timepicker-col-label {
+  font-size: 11px;
+  color: @text-tertiary;
+  letter-spacing: 1px;
+}
+
+.timepicker-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid fade(@text-tertiary, 15%);
+}
+
+.timepicker-btn {
+  background: transparent;
+  border: 1px solid fade(@text-tertiary, 30%);
+  color: @text-secondary;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-family: @font-family-base;
+  cursor: pointer;
+  transition: all @animation-duration-fast;
+
+  &:hover {
+    border-color: @primary-color;
+    color: @primary-color;
+  }
+}
+
+.timepicker-btn-now {
+  color: @accent-color;
+  border-color: fade(@accent-color, 30%);
+  &:hover { border-color: @accent-color; background: fade(@accent-color, 5%); }
+}
+
+.timepicker-btn-confirm {
+  color: @primary-color;
+  border-color: @primary-color;
+  &:hover { background: fade(@primary-color, 10%); box-shadow: @shadow-sm; }
+}
+
+/* ========================================
+   DatePicker — 日期选择器
+   ======================================== */
+
+.cyberpunk-datepicker {
+  display: inline-block;
+  position: relative;
+  font-family: @font-family-base;
+
+  .datepicker-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 12px;
+    background: @bg-secondary;
+    border: @border-width solid @border-color;
+    color: @text-primary;
+    cursor: pointer;
+    transition: border-color @animation-duration-fast, box-shadow @animation-duration-fast;
+    min-width: 150px;
+
+    &:hover {
+      border-color: @primary-color-light;
+    }
+  }
+
+  .datepicker-value {
+    font-family: @font-family-heading;
+    letter-spacing: 1px;
+    color: @primary-color;
+  }
+
+  .datepicker-placeholder {
+    color: @text-tertiary;
+    font-size: 13px;
+  }
+
+  .datepicker-icon {
+    color: @text-tertiary;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    font-size: 14px;
+  }
+
+  /* ── Color variants ── */
+
+  &.datepicker-secondary {
+    .datepicker-trigger { border-color: @border-color-secondary;
+      &:hover { border-color: @secondary-color-light; }
+    }
+    .datepicker-value { color: @secondary-color; }
+  }
+
+  &.datepicker-accent {
+    .datepicker-trigger { border-color: @accent-color;
+      &:hover { border-color: @accent-color-light; }
+    }
+    .datepicker-value { color: @accent-color; }
+  }
+
+  /* ── Glow ── */
+
+  &.datepicker-glow {
+    .datepicker-trigger { box-shadow: @shadow-sm; }
+    &.datepicker-secondary .datepicker-trigger { box-shadow: 0 0 5px @secondary-color; }
+    &.datepicker-accent .datepicker-trigger { box-shadow: 0 0 5px @accent-color; }
+  }
+
+  /* ── Sizes ── */
+
+  &.datepicker-small {
+    .datepicker-trigger { padding: 4px 8px; font-size: 12px; min-width: 120px; }
+    .datepicker-value { font-size: 13px; }
+  }
+
+  &.datepicker-large {
+    .datepicker-trigger { padding: 12px 16px; font-size: 16px; min-width: 190px; }
+    .datepicker-value { font-size: 18px; }
+  }
+
+  /* ── Disabled ── */
+
+  &.datepicker-disabled {
+    .datepicker-trigger {
+      opacity: 0.5;
+      cursor: not-allowed;
+      &:hover { border-color: @border-color; }
+    }
+  }
+}
+
+/* Panel */
+
+.datepicker-panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: @z-index-dropdown;
+  background: @bg-secondary;
+  border: @border-width solid @border-color;
+  padding: 14px 16px;
+  min-width: 260px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 15px fade(@primary-color, 15%);
+
+  &.datepicker-panel-secondary {
+    border-color: @border-color-secondary;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 15px fade(@secondary-color, 15%);
+  }
+
+  &.datepicker-panel-accent {
+    border-color: @accent-color;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 15px fade(@accent-color, 15%);
+  }
+}
+
+.datepicker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.datepicker-header-title {
+  font-family: @font-family-heading;
+  font-size: 14px;
+  color: @text-primary;
+  letter-spacing: 1px;
+}
+
+.datepicker-nav {
+  background: none;
+  border: 1px solid fade(@text-tertiary, 30%);
+  color: @text-tertiary;
+  cursor: pointer;
+  padding: 3px 6px;
+  display: flex;
+  align-items: center;
+  border-radius: @border-radius-sm;
+  transition: all @animation-duration-fast;
+
+  &:hover {
+    border-color: @primary-color;
+    color: @primary-color;
+  }
+}
+
+.datepicker-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.datepicker-weekday {
+  font-size: 11px;
+  color: @text-tertiary;
+  padding: 4px 0;
+  letter-spacing: 1px;
+}
+
+.datepicker-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.datepicker-cell {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: @text-secondary;
+  cursor: pointer;
+  border-radius: @border-radius-sm;
+  transition: all @animation-duration-fast;
+  position: relative;
+
+  &:hover:not(.datepicker-cell-empty):not(.datepicker-cell-selected) {
+    background: fade(@primary-color, 8%);
+    color: @text-primary;
+  }
+
+  &.datepicker-cell-empty {
+    cursor: default;
+  }
+
+  &.datepicker-cell-today {
+    color: @primary-color;
+    font-weight: 700;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 3px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: @primary-color;
+    }
+  }
+
+  &.datepicker-cell-selected {
+    background: fade(@primary-color, 15%);
+    border: 1px solid @primary-color;
+    color: @primary-color;
+    font-weight: 700;
+    text-shadow: 0 0 6px @primary-color;
+    box-shadow: 0 0 8px fade(@primary-color, 30%);
+  }
+}
+
+.datepicker-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid fade(@text-tertiary, 15%);
+}
+
+.datepicker-btn {
+  background: transparent;
+  border: 1px solid fade(@text-tertiary, 30%);
+  color: @text-secondary;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-family: @font-family-base;
+  cursor: pointer;
+  transition: all @animation-duration-fast;
+
+  &:hover {
+    border-color: @primary-color;
+    color: @primary-color;
+  }
+}
+
+.datepicker-btn-today {
+  color: @primary-color;
+  border-color: @primary-color;
+  &:hover { background: fade(@primary-color, 10%); box-shadow: @shadow-sm; }
+}

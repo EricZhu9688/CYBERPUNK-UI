@@ -1,0 +1,18 @@
+@import "@/styles/variables.less";
+
+.cyberpunk-cursor {
+  .cursor-core {
+    box-shadow: 0 0 10px @primary-color, 0 0 20px @primary-color;
+  }
+
+  .cursor-halo {
+    @keyframes cyberpunk-glow {
+      0%, 100% {
+        box-shadow: 0 0 5px @primary-color, 0 0 10px @secondary-color;
+      }
+      50% {
+        box-shadow: 0 0 10px @primary-color, 0 0 20px @secondary-color, 0 0 30px @accent-color;
+      }
+    }
+  }
+}

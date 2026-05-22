@@ -1,0 +1,117 @@
+@import "@/styles/variables.less";
+
+.cyberpunk-card {
+  background: @bg-secondary;
+  border: @border-width solid @border-color;
+  border-radius: @border-radius-md;
+  overflow: hidden;
+  transition: all @animation-duration-normal @animation-timing-function;
+  box-shadow: 0 0 8px rgba(0, 243, 255, 0.08);
+  font-family: @font-family-base;
+
+  &:hover {
+    box-shadow: 0 0 12px rgba(0, 243, 255, 0.15);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: @spacing-md @spacing-lg;
+    border-bottom: 1px solid fade(@border-color, 30%);
+    font-family: @font-family-heading;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: @primary-color;
+
+    .card-header-left {
+      display: flex;
+      align-items: center;
+      gap: @spacing-sm;
+    }
+
+    .card-extra {
+      color: @text-tertiary;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+  }
+
+  .card-cover {
+    width: 100%;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+  }
+
+  .card-body {
+    padding: @spacing-lg;
+    color: @text-secondary;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .card-footer {
+    padding: @spacing-md @spacing-lg;
+    border-top: 1px solid fade(@border-color, 20%);
+    display: flex;
+    align-items: center;
+    gap: @spacing-sm;
+  }
+
+  // 变体
+  &.card-bordered {
+    border-width: 2px;
+  }
+
+  &.card-glow {
+    border-color: @primary-color;
+    box-shadow: @shadow-sm;
+
+    &:hover {
+      box-shadow: @shadow-md;
+    }
+  }
+
+  &.card-secondary {
+    border-color: @secondary-color;
+    box-shadow: 0 0 8px rgba(255, 0, 255, 0.08);
+
+    .card-header { color: @secondary-color; }
+
+    &:hover {
+      box-shadow: 0 0 14px rgba(255, 0, 255, 0.18);
+    }
+  }
+
+  &.card-accent {
+    border-color: @accent-color;
+    box-shadow: 0 0 8px rgba(0, 255, 0, 0.08);
+
+    .card-header { color: @accent-color; }
+
+    &:hover {
+      box-shadow: 0 0 14px rgba(0, 255, 0, 0.18);
+    }
+  }
+
+  &.card-hoverable {
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-2px);
+      border-color: @primary-color;
+    }
+  }
+
+  &.card-sm {
+    .card-header { padding: @spacing-sm @spacing-md; font-size: 12px; }
+    .card-body { padding: @spacing-md; font-size: 13px; }
+  }
+
+}

@@ -1,0 +1,128 @@
+/* ═══════════════════════════════════════════════════════════════
+   Cyberpunk UI — CSS Custom Properties (Design Tokens)
+   支持运行时换肤，可通过修改 :root 变量动态切换主题
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── 主色调：霓虹蓝 ── */
+  --cp-color-primary: #00f3ff;
+  --cp-color-primary-dark: #0080ff;
+  --cp-color-primary-light: #80ffff;
+
+  /* ── 次要色：霓虹粉 ── */
+  --cp-color-secondary: #ff00ff;
+  --cp-color-secondary-dark: #cc00cc;
+  --cp-color-secondary-light: #ff80ff;
+
+  /* ── 强调色：霓虹绿 ── */
+  --cp-color-accent: #00ff00;
+  --cp-color-accent-dark: #00cc00;
+  --cp-color-accent-light: #80ff80;
+
+  /* ── 危险色 ── */
+  --cp-color-danger: #ff0066;
+  --cp-color-danger-dark: #cc0052;
+  --cp-color-danger-light: #ff3388;
+
+  /* ── 背景色 ── */
+  --cp-bg-primary: #0a0a0f;
+  --cp-bg-secondary: #1a1a2e;
+  --cp-bg-tertiary: #2a2a3e;
+  --cp-bg-surface: rgba(26, 26, 46, 0.8);
+  --cp-bg-overlay: rgba(5, 5, 15, 0.85);
+
+  /* ── 文字色 ── */
+  --cp-text-primary: #ffffff;
+  --cp-text-secondary: #b0b0ff;
+  --cp-text-tertiary: #8080cc;
+  --cp-text-disabled: #666699;
+
+  /* ── 边框色 ── */
+  --cp-border-color: #00f3ff;
+  --cp-border-color-secondary: #ff00ff;
+  --cp-border-color-faded: rgba(0, 243, 255, 0.3);
+
+  /* ── 边框 ── */
+  --cp-border-width: 1px;
+
+  /* ── 圆角 ── */
+  --cp-radius-sm: 2px;
+  --cp-radius-md: 4px;
+  --cp-radius-lg: 8px;
+  --cp-radius-round: 50px;
+
+  /* ── 阴影 ── */
+  --cp-shadow-sm: 0 0 5px #00f3ff;
+  --cp-shadow-md: 0 0 10px #00f3ff, 0 0 20px #ff00ff;
+  --cp-shadow-lg: 0 0 15px #00f3ff, 0 0 30px #ff00ff, 0 0 45px #00ff00;
+  --cp-shadow-glow-blue: 0 0 10px rgba(0, 243, 255, 0.4);
+  --cp-shadow-glow-pink: 0 0 10px rgba(255, 0, 255, 0.4);
+  --cp-shadow-glow-green: 0 0 10px rgba(0, 255, 0, 0.4);
+
+  /* ── 动画 ── */
+  --cp-duration-fast: 0.15s;
+  --cp-duration-normal: 0.3s;
+  --cp-duration-slow: 0.5s;
+  --cp-easing-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --cp-easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* ── 字体 ── */
+  --cp-font-mono: "Courier New", "Consolas", "Monaco", monospace;
+  --cp-font-display: "Orbitron", "Arial Black", sans-serif;
+
+  /* ── 字号 ── */
+  --cp-font-size-xs: 11px;
+  --cp-font-size-sm: 12px;
+  --cp-font-size-base: 14px;
+  --cp-font-size-md: 16px;
+  --cp-font-size-lg: 18px;
+  --cp-font-size-xl: 24px;
+
+  /* ── 间距 ── */
+  --cp-space-xs: 4px;
+  --cp-space-sm: 8px;
+  --cp-space-md: 16px;
+  --cp-space-lg: 24px;
+  --cp-space-xl: 32px;
+  --cp-space-xxl: 48px;
+
+  /* ── Z-index ── */
+  --cp-z-cursor: 9999;
+  --cp-z-modal: 1000;
+  --cp-z-dropdown: 100;
+  --cp-z-tooltip: 10;
+  --cp-z-base: 1;
+}
+
+/* ── 预设主题变体 ── */
+
+/* 暗夜模式（默认） */
+[data-theme="dark"] {
+  /* 使用默认值 */
+}
+
+/* 亮色模式（实验性） */
+[data-theme="light"] {
+  --cp-bg-primary: #f0f0f5;
+  --cp-bg-secondary: #e0e0ee;
+  --cp-bg-tertiary: #d0d0dd;
+  --cp-bg-surface: rgba(224, 224, 238, 0.8);
+  --cp-bg-overlay: rgba(240, 240, 245, 0.85);
+  --cp-text-primary: #0a0a0f;
+  --cp-text-secondary: #333366;
+  --cp-text-tertiary: #666699;
+  --cp-text-disabled: #9999bb;
+}
+
+/* 血月模式 */
+[data-theme="blood-moon"] {
+  --cp-color-primary: #ff0044;
+  --cp-color-primary-dark: #cc0036;
+  --cp-color-primary-light: #ff6699;
+  --cp-color-secondary: #ff6600;
+  --cp-color-accent: #ffcc00;
+  --cp-border-color: #ff0044;
+  --cp-bg-primary: #0d0005;
+  --cp-bg-secondary: #1a0010;
+  --cp-bg-tertiary: #2a0020;
+}

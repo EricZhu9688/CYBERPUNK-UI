@@ -1,0 +1,19 @@
+# 静态资源目录
+
+## 目录说明
+
+| 目录 | 用途 | 建议文件格式 |
+|------|------|-------------|
+| `fonts/` | 本地字体文件 | `.ttf`, `.woff`, `.woff2` |
+| `icons/` | SVG/PNG 图标资源 | `.svg`, `.png` |
+| `audio/` | 提示音、背景音效 | `.mp3`, `.wav`, `.ogg` |
+
+## 推荐资源
+
+### 字体
+- Orbitron (标题字体): https://fonts.google.com/specimen/Orbitron
+- JetBrains Mono (代码字体): https://fonts.google.com/specimen/JetBrains+Mono
+
+### 音效
+- 赛博朋克风格 UI 音效: https://pixabay.com/sound-effects/
+- 免费音效库: https://freesound.org/

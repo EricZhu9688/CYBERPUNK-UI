@@ -1,0 +1,98 @@
+@import "@/styles/variables.less";
+
+.cyberpunk-collapse {
+  border: @border-width solid @border-color;
+  border-radius: @border-radius-md;
+  overflow: hidden;
+  background: @bg-secondary;
+  box-shadow: 0 0 6px rgba(0, 243, 255, 0.06);
+
+  .collapse-item {
+    border-bottom: 1px solid fade(@border-color, 20%);
+
+    &:last-child { border-bottom: none; }
+
+    &.item-active .collapse-header {
+      color: @primary-color;
+    }
+
+    &.item-disabled {
+      opacity: 0.5;
+
+      .collapse-header { cursor: not-allowed; }
+    }
+  }
+
+  .collapse-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: @spacing-md @spacing-lg;
+    cursor: pointer;
+    color: @text-primary;
+    font-family: @font-family-heading;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all @animation-duration-fast;
+    user-select: none;
+
+    &:hover {
+      background: fade(@primary-color, 5%);
+    }
+
+    .collapse-header-left {
+      display: flex;
+      align-items: center;
+      gap: @spacing-sm;
+    }
+
+    .collapse-arrow {
+      transition: transform @animation-duration-normal @animation-timing-function;
+      color: @text-tertiary;
+
+      svg {
+        width: 12px;
+        height: 12px;
+      }
+
+      &.arrow-active {
+        transform: rotate(180deg);
+        color: @primary-color;
+      }
+    }
+
+    .collapse-extra {
+      color: @text-tertiary;
+      font-size: 12px;
+      margin-right: @spacing-sm;
+    }
+  }
+
+  .collapse-body {
+    overflow: hidden;
+    transition: height @animation-duration-normal @animation-timing-function;
+
+    .collapse-content {
+      padding: @spacing-md @spacing-lg;
+      color: @text-secondary;
+      font-size: 14px;
+      line-height: 1.7;
+      border-top: 1px solid fade(@border-color, 15%);
+    }
+  }
+
+  &.collapse-glow {
+    border-color: @primary-color;
+    box-shadow: @shadow-sm;
+  }
+
+  &.collapse-bordered .collapse-item {
+    border-color: fade(@border-color, 40%);
+  }
+
+  &.collapse-sm {
+    .collapse-header { padding: @spacing-sm @spacing-md; font-size: 12px; }
+    .collapse-content { padding: @spacing-sm @spacing-md; font-size: 13px; }
+  }
+}

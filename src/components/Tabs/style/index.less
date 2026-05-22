@@ -1,0 +1,350 @@
+@import "@/styles/variables.less";
+@import "@/styles/mixins.less";
+
+.cyberpunk-tabs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  // 位置
+  &.tabs-top {
+    flex-direction: column;
+  }
+
+  &.tabs-bottom {
+    flex-direction: column-reverse;
+  }
+
+  &.tabs-left {
+    flex-direction: row;
+  }
+
+  &.tabs-right {
+    flex-direction: row-reverse;
+  }
+
+  // 尺寸
+  &.tabs-sm {
+    .tabs-tab {
+      padding: @spacing-xs @spacing-sm;
+      font-size: 12px;
+    }
+  }
+
+  &.tabs-md {
+    .tabs-tab {
+      padding: @spacing-sm @spacing-md;
+      font-size: 14px;
+    }
+  }
+
+  &.tabs-lg {
+    .tabs-tab {
+      padding: @spacing-md @spacing-lg;
+      font-size: 16px;
+    }
+  }
+
+  // 类型
+  &.tabs-line {
+    .tabs-nav {
+      border-bottom: 1px solid @border-color;
+    }
+
+    .tabs-tab {
+      background: transparent;
+      border: none;
+      position: relative;
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: transparent;
+        transition: background @animation-duration-normal @animation-timing-function;
+      }
+
+      &.tabs-tab-active {
+        color: @primary-color;
+
+        &::after {
+          background: @primary-color;
+          box-shadow: @shadow-sm;
+        }
+      }
+    }
+  }
+
+  &.tabs-card {
+    .tabs-nav {
+      .tabs-tab {
+        background: @bg-secondary;
+        border: 1px solid @border-color;
+        border-bottom: none;
+        margin-right: -1px;
+
+        &.tabs-tab-active {
+          background: @bg-primary;
+          color: @primary-color;
+          border-color: @primary-color;
+          z-index: 2;
+        }
+
+        &:first-child {
+          border-top-left-radius: @border-radius-md;
+        }
+
+        &:last-child {
+          border-top-right-radius: @border-radius-md;
+        }
+      }
+    }
+
+    .tabs-content {
+      border: 1px solid @border-color;
+      border-top: none;
+      background: @bg-primary;
+      padding: @spacing-lg;
+      border-radius: 0 @border-radius-md @border-radius-md @border-radius-md;
+    }
+  }
+
+  // 导航栏
+  .tabs-nav {
+    position: relative;
+    z-index: 1;
+
+    &.tabs-nav-scrollable {
+      overflow-x: auto;
+      .cyberpunk-scrollbar();
+    }
+
+    .tabs-nav-container {
+      display: flex;
+      position: relative;
+
+      &.tabs-vertical {
+        flex-direction: column;
+      }
+    }
+  }
+
+  // Tab项
+  .tabs-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: @spacing-xs;
+    cursor: pointer;
+    color: @text-secondary;
+    font-family: @font-family-base;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all @animation-duration-normal @animation-timing-function;
+    position: relative;
+    -webkit-user-select: none;
+    user-select: none;
+
+    &:hover:not(.tabs-tab-disabled) {
+      color: @primary-color-light;
+    }
+
+    &.tabs-tab-active {
+      color: @primary-color;
+      font-weight: 600;
+    }
+
+    &.tabs-tab-disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      color: @text-disabled;
+    }
+
+    .tabs-tab-icon {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .tabs-tab-label {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .tabs-tab-badge {
+      margin-left: @spacing-xs;
+
+      .tabs-badge-dot {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #ff3366;
+        box-shadow: 0 0 4px #ff3366;
+      }
+
+      .tabs-badge-count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 18px;
+        height: 18px;
+        padding: 0 4px;
+        font-size: 10px;
+        font-weight: 600;
+        border-radius: 9px;
+        background: #ff3366;
+        color: @text-primary;
+        box-shadow: 0 0 4px #ff3366;
+      }
+    }
+
+    .tabs-tab-glow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      animation: cyberpunk-glow 2s ease-in-out infinite;
+      z-index: -1;
+    }
+  }
+
+  // 指示器
+  .tabs-indicator {
+    position: absolute;
+    background: @primary-color;
+    box-shadow: @shadow-sm;
+    transition: all @animation-duration-normal @animation-timing-function-bounce;
+    z-index: 1;
+  }
+
+  // 扫描线
+  .tabs-scan-line {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, @primary-color, transparent);
+    animation: cyberpunk-scan 3s linear infinite;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  // 内容区域
+  .tabs-content {
+    flex: 1;
+    position: relative;
+    z-index: 0;
+
+    .tabs-tabpane {
+      display: none;
+
+      &.tabs-tabpane-active {
+        display: block;
+        animation: tabpane-fade-in @animation-duration-normal @animation-timing-function;
+      }
+    }
+  }
+
+  // 垂直布局
+  &.tabs-left,
+  &.tabs-right {
+    .tabs-vertical {
+      display: flex;
+      flex: 1;
+
+      .tabs-nav {
+        flex-shrink: 0;
+
+        .tabs-nav-container {
+          flex-direction: column;
+          align-items: stretch;
+
+          .tabs-tab {
+            text-align: left;
+            justify-content: flex-start;
+          }
+        }
+      }
+
+      .tabs-content {
+        flex: 1;
+        min-width: 0;
+      }
+    }
+  }
+
+  // 居中
+  &.tabs-centered {
+    .tabs-nav-container {
+      justify-content: center;
+    }
+  }
+
+  // 边框
+  &.tabs-bordered {
+    .tabs-nav {
+      border: 1px solid @border-color;
+      border-radius: @border-radius-md;
+      padding: @spacing-xs;
+      background: @bg-surface;
+    }
+
+    .tabs-content {
+      border: 1px solid @border-color;
+      border-radius: @border-radius-md;
+      margin-top: @spacing-sm;
+      background: @bg-surface;
+      padding: @spacing-lg;
+    }
+  }
+
+  // 发光效果
+  &.tabs-glow {
+    .tabs-nav {
+      box-shadow: @shadow-sm;
+    }
+
+    .tabs-tab-active {
+      .tabs-tab-glow {
+        box-shadow: @shadow-md;
+      }
+    }
+  }
+}
+
+// 动画
+@keyframes tabpane-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cyberpunk-glow {
+  0%, 100% {
+    box-shadow: @shadow-sm;
+  }
+  50% {
+    box-shadow: @shadow-md;
+  }
+}
+
+@keyframes cyberpunk-scan {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}

@@ -1,0 +1,111 @@
+@import "@/styles/variables.less";
+
+.cyberpunk-footer {
+  width: 100%;
+  background: @bg-secondary;
+  border-top: 2px solid @border-color;
+  box-shadow: 0 -2px 10px rgba(0, 243, 255, 0.1);
+  padding: @spacing-xl @spacing-xxl;
+  font-family: @font-family-base;
+
+  .footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: @spacing-xl;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer-section {
+    flex: 1;
+    min-width: 180px;
+
+    .footer-title {
+      color: @primary-color;
+      font-family: @font-family-heading;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 0 6px rgba(0, 243, 255, 0.4);
+      margin-bottom: @spacing-md;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        margin-bottom: @spacing-sm;
+
+        a, span {
+          color: @text-secondary;
+          font-size: 13px;
+          text-decoration: none;
+          transition: color @animation-duration-fast;
+          cursor: default;
+
+          &:hover {
+            color: @primary-color;
+            text-shadow: 0 0 4px @primary-color;
+          }
+        }
+      }
+    }
+  }
+
+  .footer-bottom {
+    margin-top: @spacing-lg;
+    padding-top: @spacing-md;
+    border-top: 1px solid fade(@border-color, 30%);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .footer-copyright {
+      color: @text-disabled;
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: @spacing-md;
+
+      .social-link {
+        width: 32px;
+        height: 32px;
+        border: 1px solid fade(@border-color, 40%);
+        border-radius: @border-radius-sm;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: @text-tertiary;
+        font-size: 14px;
+        transition: all @animation-duration-fast;
+        text-decoration: none;
+
+        &:hover {
+          border-color: @primary-color;
+          color: @primary-color;
+          box-shadow: @shadow-sm;
+        }
+      }
+    }
+  }
+
+  &.footer-dark {
+    background: @bg-primary;
+    border-top-color: fade(@border-color, 30%);
+  }
+
+  &.footer-glow {
+    border-top: 2px solid @primary-color;
+    box-shadow: 0 -2px 20px rgba(0, 243, 255, 0.2);
+  }
+}
