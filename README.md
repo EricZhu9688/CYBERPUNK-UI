@@ -1,11 +1,13 @@
 # Cyberpunk UI
 
-赛博朋克风格 React UI 组件库 · React + TypeScript + Less · 17 个组件
+赛博朋克风格 React UI 组件库 · React + TypeScript + Less · 21 个组件
 
 ## 特性
 
 - **赛博朋克美学** — 霓虹蓝/紫/粉配色、发光边框、扫描线动画
 - **TypeScript 全覆盖** — 完整类型定义，智能 IDE 提示
+- **BorderBeam 边框流光** — SVG 动效，9 种预设渐变、多光束、可调速
+- **IconLibrary 图标库** — 68 个赛博 SVG 图标，WebP/PNG 下载
 - **CSS 变量换肤** — 40+ 设计 token，支持运行时主题切换
 - **Tree Shaking** — ESM 优先，按需引入
 - **AI 友好** — 内置 AI_USAGE.md 防止 API 臆造
@@ -17,7 +19,7 @@ npm install cyberpunk-ui
 ```
 
 ```tsx
-import { Button, Input, Modal, Table } from "cyberpunk-ui";
+import { Cursor, Button, Card, Table, Time, IconLibrary, BorderBeam } from "cyberpunk-ui";
 import "cyberpunk-ui/dist/style.css";
 
 function App() {
@@ -25,6 +27,10 @@ function App() {
     <>
       <Cursor color="#ff00ff" animated showTrail />
       <Button type="primary" glow scanEffect>赛博按钮</Button>
+      <BorderBeam color="neon" beamSize={0.2}>
+        <Card title="系统状态">ONLINE</Card>
+      </BorderBeam>
+      <Time format="full" color="primary" glow scanEffect />
       <Table columns={columns} dataSource={data} striped glow />
     </>
   );
@@ -38,6 +44,8 @@ function App() {
 |------|------|
 | **Cursor** | 自定义光标，支持轨迹、点击波纹、霓虹发光 |
 | **Typewriter** | 打字机效果，逐字显示文本，支持循环播放 |
+| **BorderBeam** | SVG 边框流光，9 种预设渐变、多光束、可调速宽 |
+| **BorderFlow** | BorderBeam 别名，向后兼容 |
 
 ### 通用 Basic
 | 组件 | 说明 |
@@ -66,6 +74,10 @@ function App() {
 | **Collapse** | 折叠面板，手风琴模式、禁用项、自定义 extra |
 | **Table** | 表格，排序/斑马纹/行选中/加载态/空状态 |
 | **CodeBlock** | 代码块，语法高亮、一键复制、行号、窗口装饰点 |
+| **Time** | HUD 实时时钟，星期/日期/时间、12h/24h、扫描线、3 尺寸 |
+| **TimePicker** | 时间选择器，时/分/秒列、HH:mm/HH:mm:ss、此刻快捷 |
+| **DatePicker** | 日期选择器，月导航日历、今天/选中高亮、可控/非受控 |
+| **IconLibrary** | 图标库，68 个赛博 SVG 图标、6 分类、搜索、WebP/PNG 下载 |
 
 ### 导航 Navigation
 | 组件 | 说明 |
@@ -77,6 +89,46 @@ function App() {
 |------|------|
 | **Modal** | 弹窗，Portal 渲染、扫描线遮罩、ESC 关闭 |
 | **Loading** | 加载，spinner/dots/skeleton 三种样式、全屏遮罩 |
+
+## BorderBeam 边框流光
+
+```tsx
+import { BorderBeam, beamPresets } from "cyberpunk-ui";
+
+// 预设渐变
+<BorderBeam color="neon" beamSize={0.2} beams={2} duration={3}>
+  <Card title="系统状态">ONLINE</Card>
+</BorderBeam>
+
+// 自定义色标
+<BorderBeam
+  color={[
+    { color: "#ff00ff", percent: 0 },
+    { color: "#00f3ff", percent: 100 },
+  ]}
+  borderWidth={3}
+>
+  <Button>按钮</Button>
+</BorderBeam>
+```
+
+**9 种预设:** ocean / sunset / aurora / forest / ember / nebula / neon / matrix / synthwave
+
+## IconLibrary 图标库
+
+```tsx
+import { IconLibrary } from "cyberpunk-ui";
+
+<IconLibrary
+  color="primary"
+  defaultSize={24}
+  downloadable
+  defaultFormat="webp"
+  onIconClick={(icon) => console.log(icon.name)}
+/>
+```
+
+内置 68 个赛博朋克 SVG 图标，6 大分类：通用、技术、安全、导航、媒体、赛博。悬浮弹动效果，支持 WebP/PNG 下载。
 
 ## 主题定制
 
@@ -124,7 +176,7 @@ npm run lint        # 代码检查
 ```
 cyberpunk-ui/
 ├── src/
-│   ├── components/        # 17 个组件
+│   ├── components/        # 21 个组件
 │   ├── styles/            # 主题变量、mixins、CSS tokens
 │   └── index.ts           # 库入口
 ├── site/                  # 文档站点
